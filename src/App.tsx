@@ -9,10 +9,18 @@ import todosFromServer from './api/todos';
 import { NewTodo } from './components/NewTodo/NewTodo';
 
 export const App = () => {
-  const [todos, setTodos] = useState<Todo[]>(todosFromServer);
+  const [todoList, setTodoList] = useState<Todo[]>(todosFromServer);
 
-  const addTodo = (todo: Todo) => {
-    setTodos(prev => [...prev, todo]);
+  const addTodo = (newTodo: Todo) => {
+    setTodoList(currentTodos => {
+      const maxId = currentTodos.reduce(
+        (max, todo) => (todo.id > max ? todo.id : max),
+        0,
+      );
+      const todoWithId = { ...newTodo, id: maxId + 1 };
+
+      return [...currentTodos, todoWithId];
+    });
   };
 
   return (
@@ -20,7 +28,7 @@ export const App = () => {
       <h1>Add todo form</h1>
       <div className="App">
         <NewTodo onAdd={addTodo} users={usersFromServer} />
-        <TodoList todos={todos} users={usersFromServer} />
+        <TodoList todos={todoList} users={usersFromServer} />
       </div>
     </>
   );

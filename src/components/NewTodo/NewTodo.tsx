@@ -11,7 +11,6 @@ type Props = {
 export const NewTodo: React.FC<Props> = ({ onAdd, users }) => {
   const [title, setTitle] = useState('');
   const [userId, setUserId] = useState('');
-  const [count, setCount] = useState(1000);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const isValid = title.trim() && userId;
@@ -25,7 +24,7 @@ export const NewTodo: React.FC<Props> = ({ onAdd, users }) => {
     }
 
     const newTodo: Todo = {
-      id: count,
+      id: 0,
       title: title.trim(),
       completed: false,
       userId: +userId,
@@ -35,7 +34,6 @@ export const NewTodo: React.FC<Props> = ({ onAdd, users }) => {
 
     setTitle('');
     setUserId('');
-    setCount(prev => prev + 1);
     setIsSubmitted(false);
   };
 
