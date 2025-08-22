@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import React from 'react';
-import { Todo } from '../../types/Todo';
 import { User } from '../../types/User';
 
+type NewTodoData = {
+  title: string;
+  userId: number;
+};
+
 type Props = {
-  onAdd: (todo: Todo) => void;
+  onAdd: (data: NewTodoData) => void;
   users: User[];
 };
 
@@ -23,14 +27,10 @@ export const NewTodo: React.FC<Props> = ({ onAdd, users }) => {
       return;
     }
 
-    const newTodo: Todo = {
-      id: 0,
+    onAdd({
       title: title.trim(),
-      completed: false,
       userId: +userId,
-    };
-
-    onAdd(newTodo);
+    });
 
     setTitle('');
     setUserId('');
